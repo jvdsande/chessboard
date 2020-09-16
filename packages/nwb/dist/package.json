@@ -1,0 +1,24 @@
+{
+  "name": "@chessboard/nwb-config",
+  "description": "NWB Config generator for Chessboard",
+  "version": "0.1.0",
+  "license": "ISC",
+  "files": [
+    "dist-*/",
+    "bin/"
+  ],
+  "pika": true,
+  "sideEffects": false,
+  "dependencies": {
+    "find-free-port": "^2.0.0",
+    "nodemon-webpack-plugin": "^4.3.2",
+    "null-loader": "^4.0.0",
+    "webpack": "^4.44.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  },
+  "source": "dist-src/index.js",
+  "types": "dist-types/index.d.ts",
+  "main": "dist-node/index.js"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@chessboard/nwb-config",
+  "version": "0.1.0",
+  "description": "NWB Config generator for Chessboard",
+  "main": "index.js",
+  "mixt": {
+    "dist": "./dist"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-ts-standard-pkg"
+      ],
+      [
+        "@harmonyjs/pika-plugin-ts-resolve-imports"
+      ],
+      [
+        "@pika/plugin-build-node"
+      ],
+      [
+        "@harmonyjs/pika-plugin-persistent-dist"
+      ]
+    ]
+  },
+  "scripts": {
+    "build": "pika build"
+  },
+  "author": "Jérémie van der Sande <jeremie.vandersande@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "find-free-port": "^2.0.0",
+    "nodemon-webpack-plugin": "^4.3.2",
+    "null-loader": "^4.0.0",
+    "webpack": "^4.44.1"
+  }
+}

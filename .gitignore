@@ -1,0 +1,6 @@
+node_modules
+.idea
+**/pkg/*
+!**/pkg/package.json
+**/dist/*
+!**/dist/package.json

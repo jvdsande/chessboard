@@ -1,0 +1,33 @@
+{
+  "name": "@chessboard/ssr-development",
+  "version": "0.1.0",
+  "description": "Development helper for Chessboard SSR",
+  "main": "index.js",
+  "mixt": {
+    "dist": "./dist"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-ts-standard-pkg"
+      ],
+      [
+        "@harmonyjs/pika-plugin-ts-resolve-imports"
+      ],
+      [
+        "@pika/plugin-build-node"
+      ],
+      [
+        "@harmonyjs/pika-plugin-persistent-dist"
+      ]
+    ]
+  },
+  "scripts": {
+    "build": "pika build"
+  },
+  "author": "Jérémie van der Sande <jeremie.vandersande@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  }
+}

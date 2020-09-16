@@ -1,0 +1,15 @@
+import { ChessboardPiece } from '@chessboard/client'
+
+import App from './app/app'
+
+const piece = ChessboardPiece({
+  name: 'SecondPiece',
+  component: App,
+})
+
+if(module.hot) {
+  module.hot.accept('./app/app', () => {
+    const NextApp = require('./app/app').default
+    piece.reload(NextApp)
+  })
+}

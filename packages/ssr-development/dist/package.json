@@ -1,0 +1,19 @@
+{
+  "name": "@chessboard/ssr-development",
+  "description": "Development helper for Chessboard SSR",
+  "version": "0.1.0",
+  "license": "ISC",
+  "files": [
+    "dist-*/",
+    "bin/"
+  ],
+  "pika": true,
+  "sideEffects": false,
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  },
+  "source": "dist-src/index.js",
+  "types": "dist-types/index.d.ts",
+  "main": "dist-node/index.js"
+}

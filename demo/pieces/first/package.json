@@ -1,0 +1,28 @@
+{
+  "name": "firstpiece",
+  "version": "1.0.0",
+  "description": "Describe firstpiece here",
+  "private": true,
+  "scripts": {
+    "build": "cnwb build-react-app",
+    "clean": "cnwb clean-app",
+    "start": "cnwb serve-react-app",
+    "serve": "SSR_PORT=3001 node ./dist/server.js",
+    "test": "cnwb test-react",
+    "test:coverage": "cnwb test-react --coverage",
+    "test:watch": "cnwb test-react --server"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "@chessboard/nwb": "^0.25.3-next.0",
+    "babel-preset-airbnb": "^5.0.0",
+    "nwb": "0.25.3-next.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}
