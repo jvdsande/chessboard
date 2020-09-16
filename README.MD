@@ -61,6 +61,7 @@ Install all dependency, using the `mixt` mono-repo manager:
 npm ci
 npx mixt exec "npm ci"
 npx mixt build
+npm run demo:install
 ```
 
 #### Development mode

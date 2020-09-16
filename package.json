@@ -4,6 +4,11 @@
   "description": "A MicroFrontends framework using React and Nwb",
   "main": "index.js",
   "scripts": {
+    "demo:install": "npm run demo:install:piece:first && npm run demo:install:piece:second && npm run demo:install:board:cra",
+    "demo:install:piece:first": "cd demo/pieces/first && npm ci",
+    "demo:install:piece:second": "cd demo/pieces/second && npm ci",
+    "demo:install:board:cra": "cd demo/boards/create-react-app && npm ci",
+
     "dev:piece:first": "cd demo/pieces/first && npm start",
     "dev:piece:second": "cd demo/pieces/second && npm start",
     "dev:board:cra": "cd demo/boards/create-react-app && rm -rf node_modules/react && rm -rf node_modules/react-dom && npm start",

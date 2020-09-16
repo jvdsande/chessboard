@@ -19,8 +19,7 @@
   },
   "devDependencies": {
     "@chessboard/nwb": "^0.25.3-next.0",
-    "babel-preset-airbnb": "^5.0.0",
-    "nwb": "0.25.3-next.0"
+    "babel-preset-airbnb": "^5.0.0"
   },
   "author": "",
   "license": "MIT",
