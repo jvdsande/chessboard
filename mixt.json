@@ -1,5 +1,13 @@
 {
   "sources": [
     "packages"
+  ],
+  "buildOrder": [
+    "externals",
+    "client",
+    "ssr-development",
+    "ssr",
+    "nwb",
+    "cluster"
   ]
 }
