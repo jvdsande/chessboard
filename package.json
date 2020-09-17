@@ -12,7 +12,6 @@
     "dev:piece:first": "cd demo/pieces/first && npm start",
     "dev:piece:second": "cd demo/pieces/second && npm start",
     "dev:board:cra": "cd demo/boards/create-react-app && rm -rf node_modules/react && rm -rf node_modules/react-dom && npm start",
-    "dev:cluster": "SKIP_PREFLIGHT_CHECK=true chessboard-cluster ./demo/chessboard-pieces.json",
 
     "build:piece:first": "cd demo/pieces/first && npm run build",
     "build:piece:second": "cd demo/pieces/second && npm run build",

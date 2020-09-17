@@ -38,19 +38,25 @@ loaded and displayed in place of the Square.
 It is also possible to inject Pieces at build-time through the static-injection tool, or at fetch-time 
 through the Pieces proxy.
 
-### Cluster
+### Static Injection/Pieces Proxy
 
-A cluster is a server which handles a set of Pieces. This allows the Board to only need to know
-one address, the cluster's, instead of knowing the address of all required pieces.
+The Pieces Proxy sits between a CDN and the client,
+and any HTML file passed through it will see its Pieces placeholder populated by a 
+Server-Side-Rendered version of the component.
+
+The Static Injection tool acts just like the Pieces Proxy, but acts on file at build time,
+patching any HTML file found in a given path.
+
+Those tools are developed by the [ARA Framework project](https://ara-framework.github.io/website/),
+which Chessboard is inspired by and compatible with.
 
 ## Demonstration
 
 This package provides a full demonstration of Chessboard in action. The demonstration is composed
-of four parts:
+of three parts:
 
  - Two Pieces, called `FirstPiece` and `SecondPiece`, which source can be found in the [demo/pieces](./demo/pieces) folder.
  - One Board, built with create-react-app, which loads our two Pieces in a single application.
- - One Cluster file, available in the [demo](./demo) folder.
  
 ### Running the demo
 
@@ -65,7 +71,7 @@ npm run demo:install
 ```
 
 #### Development mode
-In order to run the demo in development mode, we need to launch both pieces, the cluster, and
+In order to run the demo in development mode, we need to launch both pieces and
 the board.
 
 The root `package.json` contains all the scripts necessary for launching the demo.
@@ -74,8 +80,6 @@ The root `package.json` contains all the scripts necessary for launching the dem
 npm run dev:piece:first     # launch the first Piece in dev mode
 
 npm run dev:piece:second    # launch the second Piece in dev mode
-
-npm run dev:cluster         # launch the cluster
 
 npm run dev:board:cra       # launch the Board
 ```
@@ -97,11 +101,6 @@ npm run build:piece:first     # build the first Piece for production
 npm run build:piece:second    # build the second Piece for production
 
 npm run build:board:cra       # build the Board
-```
-
-Don't forget to keep the Cluster running;
-```
-npm run dev:cluster           # launch the cluster
 ```
 
 Then, launch the serve commands:

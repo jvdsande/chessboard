@@ -5,32 +5,42 @@ import {ChessboardExternals} from '@chessboard/externals'
 
 const {window, document} = global
 
-const PROXY_HOST = 'http://localhost:8081'
-
 ChessboardExternals()
 
-function loadScript(name: string) {
-  const src = PROXY_HOST + '/script/' + name + '.js'
+function loadScript(host: string, name: string) {
+  const [protocol, url] = host.split('://')
+  const runtime = protocol + '://' + (url + '/client.js').split('/').filter(s => !!s).join('/')
+  const piece =  protocol + '://' + (url + '/' + name + '.client.js').split('/').filter(s => !!s).join('/')
 
   return new Promise(function (resolve, reject) {
-    if (document.querySelector('script[src="'.concat(src, '"]'))) {
+    if (document.querySelector('script[src="'.concat(piece, '"]'))) {
       resolve()
       return
     }
 
-    const el = document.createElement('script')
-    el.type = 'text/javascript'
-    el.async = true
-    el.src = src
-    el.addEventListener('load', resolve)
-    el.addEventListener('error', reject)
-    el.addEventListener('abort', reject)
-    document.head.appendChild(el)
+    const runtimeEl = document.createElement('script')
+    runtimeEl.type = 'text/javascript'
+    runtimeEl.async = true
+    runtimeEl.src = runtime
+    runtimeEl.addEventListener('load', resolve)
+    runtimeEl.addEventListener('error', reject)
+    runtimeEl.addEventListener('abort', reject)
+    document.head.appendChild(runtimeEl)
+
+    const pieceEl = document.createElement('script')
+    pieceEl.type = 'text/javascript'
+    pieceEl.async = true
+    pieceEl.src = piece
+    pieceEl.addEventListener('load', resolve)
+    pieceEl.addEventListener('error', reject)
+    pieceEl.addEventListener('abort', reject)
+    document.head.appendChild(pieceEl)
   })
 }
 
-function loadStyle(name: string) {
-  const src = PROXY_HOST + '/style/' + name + '.css'
+function loadStyle(host: string, name: string) {
+  const [protocol, url] = host.split('://')
+  const src = protocol + '://' + (url + '/' + name + '.client.css').split('/').filter(s => !!s).join('/')
 
   return new Promise(function (resolve) {
     if (document.querySelector('link[href="'.concat(src, '"]'))) {
@@ -48,12 +58,25 @@ function loadStyle(name: string) {
   })
 }
 
+const ChessboardContext = React.createContext<{ pieces: Record<string, string> }>({ pieces: {} })
+
+export function ChessboardProvider({ pieces, children } : { pieces: Record<string, string>, children: React.ReactNode }) {
+  return (
+    React.createElement(
+      ChessboardContext.Provider,
+      { value: { pieces } },
+      children,
+    )
+  )
+}
+
 export function ChessboardSquare({name, props} : { name: string, props: any}) {
   const [id] = React.useState(() => v4())
   const [Component, setComponent] = React.useState<React.ComponentClass|React.FC>(() => () => null)
+  const { pieces } = React.useContext(ChessboardContext)
 
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && pieces[name]) {
       const eventListener = (e?: CustomEvent<{ component: React.ComponentClass|React.FC }>) => {
         if (e && e.detail && e.detail.component) {
           setComponent(() => e.detail.component)
@@ -62,8 +85,8 @@ export function ChessboardSquare({name, props} : { name: string, props: any}) {
 
       document.addEventListener<any>('ChessboardLoaded::' + name, eventListener)
 
-      loadStyle(name)
-        .then(() => loadScript(name))
+      loadStyle(pieces[name], name)
+        .then(() => loadScript(pieces[name], name))
         .then(() => eventListener())
         .catch(() => {
           console.error('"' + name + '" not found. Did you launch it?')
