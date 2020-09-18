@@ -3,7 +3,7 @@ import { v4 } from 'uuid'
 
 import {ChessboardExternals} from '@chessboard/externals'
 
-const {window, document} = global
+const {window, document, CustomEvent} = global
 
 ChessboardExternals()
 
@@ -12,30 +12,23 @@ function loadScript(host: string, name: string) {
   const runtime = protocol + '://' + (url + '/client.js').split('/').filter(s => !!s).join('/')
   const piece =  protocol + '://' + (url + '/' + name + '.client.js').split('/').filter(s => !!s).join('/')
 
-  return new Promise(function (resolve, reject) {
-    if (document.querySelector('script[src="'.concat(piece, '"]'))) {
-      resolve()
-      return
-    }
+  if (document.querySelector('script[src="'.concat(piece, '"]'))) {
+    const customEvent = new CustomEvent('ChessboardNeeded::' + name, {})
+    document.dispatchEvent(customEvent)
+    return
+  }
 
-    const runtimeEl = document.createElement('script')
-    runtimeEl.type = 'text/javascript'
-    runtimeEl.async = true
-    runtimeEl.src = runtime
-    runtimeEl.addEventListener('load', resolve)
-    runtimeEl.addEventListener('error', reject)
-    runtimeEl.addEventListener('abort', reject)
-    document.head.appendChild(runtimeEl)
+  const runtimeEl = document.createElement('script')
+  runtimeEl.type = 'text/javascript'
+  runtimeEl.async = true
+  runtimeEl.src = runtime
+  document.head.appendChild(runtimeEl)
 
-    const pieceEl = document.createElement('script')
-    pieceEl.type = 'text/javascript'
-    pieceEl.async = true
-    pieceEl.src = piece
-    pieceEl.addEventListener('load', resolve)
-    pieceEl.addEventListener('error', reject)
-    pieceEl.addEventListener('abort', reject)
-    document.head.appendChild(pieceEl)
-  })
+  const pieceEl = document.createElement('script')
+  pieceEl.type = 'text/javascript'
+  pieceEl.async = true
+  pieceEl.src = piece
+  document.head.appendChild(pieceEl)
 }
 
 function loadStyle(host: string, name: string) {
@@ -87,7 +80,6 @@ export function ChessboardSquare({name, props} : { name: string, props: any}) {
 
       loadStyle(pieces[name], name)
         .then(() => loadScript(pieces[name], name))
-        .then(() => eventListener())
         .catch(() => {
           console.error('"' + name + '" not found. Did you launch it?')
         })
