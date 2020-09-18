@@ -3,11 +3,21 @@ import ReactDOM from 'react-dom'
 
 import App from './app/app'
 
-document.addEventListener('DOMContentLoaded', () => {
+const render = (Component) => {
   ReactDOM.render(
     <React.StrictMode>
-      <App title="Development" />
+      <Component title="Development" />
     </React.StrictMode>,
     window.app,
   )
-})
+}
+
+document.addEventListener('DOMContentLoaded', () => render(App))
+
+if(module.hot) {
+  module.hot.accept('./app/app', () => {
+    const NextApp = require('./app/app').default
+
+    render(NextApp)
+  })
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import './app.css'
 
@@ -20,6 +21,12 @@ const App = ({title, value}) => {
       <pre className="pre-display">{time.toISOString()}</pre>
     </>
   )
+}
+
+
+App.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.string,
 }
 
 export default App

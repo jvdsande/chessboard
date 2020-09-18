@@ -16,6 +16,8 @@ const FirstView = ({title, value, onChange}) => {
 
 FirstView.propTypes = {
   title: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 }
 
 export default FirstView

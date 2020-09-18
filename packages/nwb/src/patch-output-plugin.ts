@@ -35,9 +35,9 @@ export default class ChessboardPatchOutputPlugin {
             .replace(/webpackHotUpdate/g, 'webpackHotUpdate' + view)
 
             // Avoid any window reload
-            // .replace(/window\.location\.reload\(\)/g, '')
-            // .replace(/rootWindow\.location\.reload\(\)/g, '')
-            // .replace(/self\.location\.reload\(\)/g, '')
+             .replace(/window\.location\.reload\(\)/g, '')
+             .replace(/rootWindow\.location\.reload\(\)/g, '')
+             .replace(/self\.location\.reload\(\)/g, '')
 
           asset.source = () => patched
         }
