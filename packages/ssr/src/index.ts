@@ -4,7 +4,7 @@ import {renderReact} from 'hypernova-react'
 import hypernova from 'hypernova/server'
 import express from 'express'
 
-export function ChessboardSSR({ name, component } : { name: string, component: React.ComponentClass|React.FC}) {
+export function ChessboardPiece({ name, component } : { name: string, component: React.ComponentClass|React.FC}) {
   return hypernova({
     devMode: process.env.NODE_ENV !== 'production',
     port: process.env.SSR_PORT || 30000,

@@ -1,4 +1,4 @@
-import { ChessboardPiece } from '@chessboard/client'
+import { ChessboardPiece } from '@chessboard/piece'
 
 import App from './app/app'
 

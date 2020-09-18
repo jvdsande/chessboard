@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import {ChessboardSquare, ChessboardProvider} from '@chessboard/client'
+import {ChessboardSquare, ChessboardProvider} from '@chessboard/board'
 
 import pieces from './chessboard-pieces.json'
 

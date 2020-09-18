@@ -8,15 +8,12 @@
     "demo:install:piece:first": "cd demo/pieces/first && npm ci",
     "demo:install:piece:second": "cd demo/pieces/second && npm ci",
     "demo:install:board:cra": "cd demo/boards/create-react-app && npm ci",
-
     "dev:piece:first": "cd demo/pieces/first && npm start",
     "dev:piece:second": "cd demo/pieces/second && npm start",
     "dev:board:cra": "cd demo/boards/create-react-app && rm -rf node_modules/react && rm -rf node_modules/react-dom && npm start",
-
     "build:piece:first": "cd demo/pieces/first && npm run build",
     "build:piece:second": "cd demo/pieces/second && npm run build",
     "build:board:cra": "cd demo/boards/create-react-app && npm run build",
-
     "serve:piece:first": "cd demo/pieces/first && npm run serve",
     "serve:piece:second": "cd demo/pieces/second && npm run serve",
     "serve:board:cra": "cd demo/boards/create-react-app && npm run serve"
@@ -46,10 +43,10 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@chessboard/client": "file:packages/client/dist",
-    "@chessboard/cluster": "file:packages/cluster/pkg",
+    "@chessboard/board": "file:packages/board/dist",
     "@chessboard/externals": "file:packages/externals/dist",
     "@chessboard/nwb-config": "file:packages/nwb/dist",
+    "@chessboard/piece": "file:packages/piece/dist",
     "@chessboard/ssr": "file:packages/ssr/dist",
     "@chessboard/ssr-development": "file:packages/ssr-development/dist",
     "axios": "^0.20.0",

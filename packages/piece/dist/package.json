@@ -1,6 +1,6 @@
 {
-  "name": "@chessboard/client",
-  "description": "Client utility for Chessboard, both for the views and parents",
+  "name": "@chessboard/piece",
+  "description": "Client utility for Chessboard for configuring injectable Pieces",
   "version": "0.1.0",
   "license": "ISC",
   "files": [

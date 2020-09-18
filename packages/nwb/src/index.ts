@@ -45,7 +45,7 @@ function ChessboardDev(name: string, originalConf: webpack.Configuration) {
 function ChessboardSSR(originalConf : webpack.Configuration) {
   const root = process.env.INIT_CWD || process.env.PWD!
   const src = path.resolve(root, './src')
-  const index = path.resolve(src, './index.ssr.js')
+  const index = path.resolve(src, './index.js')
   const valid = fs.existsSync(index)
 
   const webpackConf = {
@@ -65,6 +65,13 @@ function ChessboardSSR(originalConf : webpack.Configuration) {
   }
 
   webpackConf.target = 'node'
+  webpackConf.resolve = {
+    ...(webpackConf.resolve || {}),
+    alias: {
+      ...(webpackConf.resolve && webpackConf.resolve.alias || {}),
+      ['@chessboard/piece']: '@chessboard/ssr',
+    }
+  }
   webpackConf.output.filename = 'server.js'
   webpackConf.output.path = path.resolve(root, './dist')
   webpackConf.stats = {
@@ -166,15 +173,9 @@ module.exports.ChessboardNwb = function (name : string, {
   const root = process.env.INIT_CWD || process.env.PWD!
   const src = path.resolve(root, './src')
   const index = path.resolve(src, './index.js')
-  const indexes = {
-    ext: path.resolve(src, './index.ext.js'),
-    dev: path.resolve(src, './index.dev.js'),
-    ssr: path.resolve(src, './index.ssr.js')
-  }
+  const dev = path.resolve(src, './index.js')
 
-  const hasExt = fs.existsSync(indexes.ext)
-  const hasDev = fs.existsSync(indexes.dev)
-  const hasSSR = fs.existsSync(indexes.ssr)
+  const hasDev = fs.existsSync(dev)
 
   config.type = 'react-app'
 
@@ -231,18 +232,16 @@ module.exports.ChessboardNwb = function (name : string, {
       // Inject custom patching plugin
       webpackConf.plugins!.unshift(new ChessboardPatchOutputPlugin(name))
 
-      if(hasSSR) {
-        fp(30000, 40000)
-          .then(([p] : [string]) => {
-            process.env.SSR_PORT = p
-            const ssrConfig = ChessboardSSR(webpackConf)
+      fp(30000, 40000)
+        .then(([p] : [string]) => {
+          process.env.SSR_PORT = p
+          const ssrConfig = ChessboardSSR(webpackConf)
 
-            ChessboardSSRDev(ssrConfig)
-          })
-      }
+          ChessboardSSRDev(ssrConfig)
+        })
     }
 
-    if(hasSSR && process.env.NODE_ENV === 'production') {
+    if(process.env.NODE_ENV === 'production') {
       return [webpackConf, ChessboardSSR(webpackConf)]
     }
 

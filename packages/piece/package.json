@@ -1,7 +1,7 @@
 {
-  "name": "@chessboard/client",
+  "name": "@chessboard/piece",
   "version": "0.1.0",
-  "description": "Client utility for Chessboard, both for the views and parents",
+  "description": "Client utility for Chessboard for configuring injectable Pieces",
   "main": "index.js",
   "mixt": {
     "dist": "./dist"

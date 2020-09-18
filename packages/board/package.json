@@ -1,0 +1,33 @@
+{
+  "name": "@chessboard/board",
+  "version": "0.1.0",
+  "description": "Client utility for Chessboard for injecting Pieces in a Board",
+  "main": "index.js",
+  "mixt": {
+    "dist": "./dist"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-ts-standard-pkg"
+      ],
+      [
+        "@harmonyjs/pika-plugin-ts-resolve-imports"
+      ],
+      [
+        "@pika/plugin-build-web"
+      ],
+      [
+        "@harmonyjs/pika-plugin-persistent-dist"
+      ]
+    ]
+  },
+  "scripts": {
+    "build": "pika build"
+  },
+  "author": "Jérémie van der Sande <jeremie.vandersande@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  }
+}
