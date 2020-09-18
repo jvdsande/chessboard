@@ -215,9 +215,15 @@ module.exports.ChessboardNwb = function (name : string, {
   const oldWebpackConfig = config.webpack.config || ((c: any) => c)
 
   config.webpack.rules = {
+    ...(config.webpack.rules || {}),
     babel: {
+      ...(config.webpack.rules && config.webpack.rules.babel || {}),
       test: /.(jsx?|tsx?)$/
     }
+  }
+  config.webpack.define = {
+    ...(config.webpack.define || {}),
+    'process.env.CHESSBOARD_PIECE': JSON.stringify(name)
   }
   config.webpack.config = function config(conf: webpack.Configuration) {
     const webpackConf : webpack.Configuration = oldWebpackConfig(conf)

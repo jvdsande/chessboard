@@ -2,10 +2,7 @@ import { ChessboardPiece } from '@chessboard/piece'
 
 import App from './app/app'
 
-const piece = ChessboardPiece({
-  name: 'SecondPiece',
-  component: App,
-})
+const piece = ChessboardPiece(App)
 
 if(module.hot) {
   module.hot.accept('./app/app', () => {
