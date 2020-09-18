@@ -164,17 +164,23 @@ function ChessboardSSR(originalConf : webpack.Configuration) {
   return webpackConf
 }
 
-module.exports.ChessboardNwb = function (name : string, {
+module.exports.ChessboardNwb = function ({
+  name,
   port = 3001,
   config = {},
   externals = {},
   publicUrl = '/',
 } : {
+  name : string,
   port: number
   config?: any
   externals?: {[key: string]: string}
   publicUrl?: string
-} = { port: 3001 }) {
+} = { port: 3001, name: '' }) {
+  if(!name) {
+    throw new Error('You must provide a name for your Piece!')
+  }
+
   const root = process.env.INIT_CWD || process.env.PWD!
   const src = path.resolve(root, './src')
   const index = path.resolve(src, './index')
