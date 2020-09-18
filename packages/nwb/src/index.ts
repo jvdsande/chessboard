@@ -11,30 +11,35 @@ import NodemonPlugin from 'nodemon-webpack-plugin'
 import fp from 'find-free-port'
 import { ChessboardSSRDev } from '@chessboard/ssr-development'
 
-function ChessboardDll(originalConf : webpack.Configuration) {
+function ChessboardDev(name: string, originalConf: webpack.Configuration) {
   const root = process.env.INIT_CWD || process.env.PWD!
   const src = path.resolve(root, './src')
-  const index = path.resolve(src, './index.ext.js')
-  const config = {
+  const index = path.resolve(src, './index.dev.js')
+  const valid = fs.existsSync(index)
+
+  if(!valid) {
+    throw new Error('No dev entry found')
+  }
+  const webpackConf = {
     ...originalConf,
     output: {
-      ...originalConf.output!
+      ...originalConf.output!,
     },
     plugins: [...originalConf.plugins!],
+    module: {
+      ...(originalConf.module || []),
+      rules: [...originalConf.module!.rules],
+    }
   }
 
-  config.output!.filename = 'vendor.js'
-  delete config.output!.chunkFilename
+  originalConf.plugins!.splice(6, 2)
 
-  config.plugins!.splice(0, 1)
-  config.plugins!.splice(3, 4)
+  delete webpackConf.externals
+  webpackConf.output!.chunkFilename = name + '.[name].js'
+  webpackConf.output!.filename = 'dev.js'
+  webpackConf.entry = { dev: index }
 
-  config.entry = index
-
-  delete config.optimization
-  delete config.externals
-
-  return config
+  return webpackConf
 }
 
 function ChessboardSSR(originalConf : webpack.Configuration) {
@@ -146,7 +151,6 @@ function ChessboardSSR(originalConf : webpack.Configuration) {
 
   return webpackConf
 }
-module.exports.ChessboardSSR = ChessboardSSR
 
 module.exports.ChessboardNwb = function (name : string, {
   port = 3001,
@@ -220,19 +224,12 @@ module.exports.ChessboardNwb = function (name : string, {
       webpackConf.output!.publicPath = 'http://localhost:' + port + '/'
 
       webpackConf.entry = { client: index }
-      if(hasDev) {
-        webpackConf.entry.dev = indexes.dev
-      }
 
       // Remove ReactRefresh plugin
       webpackConf.plugins!.splice(4, 1)
 
       // Inject custom patching plugin
       webpackConf.plugins!.unshift(new ChessboardPatchOutputPlugin(name))
-
-      if(!hasExt) {
-        fs.writeFileSync(indexes.ext, `import { ChessboardExternals } from '@chessboard/externals'\n\nChessboardExternals()`)
-      }
 
       if(hasSSR) {
         fp(30000, 40000)
@@ -248,7 +245,12 @@ module.exports.ChessboardNwb = function (name : string, {
     if(hasSSR && process.env.NODE_ENV === 'production') {
       return [webpackConf, ChessboardSSR(webpackConf)]
     }
-    return [webpackConf, ChessboardDll(webpackConf)]
+
+    if(hasDev && process.env.NODE_ENV === 'development') {
+      return [ChessboardDev(name, webpackConf), webpackConf]
+    }
+
+    return webpackConf
   }
 
   // Configure DevServer
