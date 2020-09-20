@@ -1,7 +1,6 @@
 // Node imports
 import path from 'path'
 import fs from 'fs'
-import cProcess from 'child_process'
 
 // Webpack imports
 import webpack, { ContextReplacementPlugin } from 'webpack'

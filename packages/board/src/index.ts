@@ -86,7 +86,7 @@ export function ChessboardSquare({name, props} : { name: string, props: any}) {
 
       return () => document.removeEventListener<any>('ChessboardLoaded::' + name, eventListener)
     }
-  }, [name])
+  }, [name, pieces])
 
   return React.createElement(
     React.Fragment,
