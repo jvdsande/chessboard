@@ -65,7 +65,7 @@ Install all dependency, using the `mixt` mono-repo manager:
 
 ```
 npm ci
-npx mixt exec "npm ci"
+npx mixt ci
 npx mixt build
 npm run demo:install
 ```
@@ -87,8 +87,13 @@ npm run dev:board:cra       # launch the Board
 Run each command in a separate terminal. The last one should automatically open
 your browser, where you can see the stitched application.
 
-Edit any of the pieces in [demo/pieces](./demo/pieces) to see your changes
+Edit any of the Pieces in [demo/pieces](./demo/pieces) to see your changes
 reflected in real-time with hot-reload, directly in the Board application!
+
+You can also edit the Board in [demo/board/create-react-app](./demo/boards/create-react-app).
+
+> Note: this Readme uses the Create React App-based Board, but you can also play around
+> with another Board (Gatsby, NextJs or NWB), by changing `:cra` accordingly (`:gatsby`, `:nextjs`, `:nwb`) 
 
 #### Production mode
 
